@@ -1,0 +1,15 @@
+certifi==2020.12.5
+chardet==4.0.0
+click==8.0.1
+Flask==2.0.1
+idna==2.10
+itsdangerous==2.0.1
+Jinja2==3.0.1
+language-tool-python==2.5.3
+MarkupSafe==2.0.1
+Pyphen==0.10.0
+requests==2.25.1
+textstat==0.7.1
+tqdm==4.61.0
+urllib3==1.26.4
+Werkzeug==2.0.1
