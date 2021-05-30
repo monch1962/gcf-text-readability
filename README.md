@@ -7,11 +7,10 @@ Google Cloud Function to check text readability
 
 ## To use
 
-Send it a http POST with a JSON payload such as 
+Send it a http POST with a text payload such as 
 ```
-{
-    "text": "This is the text I would like you to check for me"
-}
+This is the text I would like you to check for me
+
 ```
 
 and you should get a response back that looks something like

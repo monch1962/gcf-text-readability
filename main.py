@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, abort
+from flask import Flask, request, jsonify, abort, make_response
 from werkzeug.exceptions import HTTPException
 import json
 
@@ -6,17 +6,28 @@ app = Flask(__name__)
 
 @app.errorhandler(HTTPException)
 def handle_bad_request(e):
-    return jsonify({"error": "Bad request! You need to supply JSON with a single 'text' field containing the text to check"}), 400
+    return jsonify({"error": "Bad request! You need to POST JSON with a single 'text' field containing the text to check to the /evaluate_text endpoint"}), 400
 
 @app.route('/evaluate_text', methods=['POST'])
-def evaluate_text(request):
-    try:
-        text = request.get_json()['text']
-    except KeyError:
-        abort(400)
+def evaluate_text():
+    #print('request: %s' % request.data)
+    #try:
+        #text = request.get_json()['text']
+    text = request.data
+    print('text: %s' % text)
+    #except KeyError:
+    #    abort(400)
     readability = evaluate_readability(text)
-    (errors_found, corrected_text) = check_for_errors(text, 'en-AU')
-    return jsonify({'original_text': text, 'readability': readability, 'errors_found': errors_found, 'corrected_text': corrected_text})
+    print(readability)
+    (errors_found, corrected_text) = check_for_errors(str(text), 'en-AU')
+    if corrected_text != text:
+        resp = make_response(json.dumps(corrected_text))
+    else:
+        resp = make_response('')
+    resp.headers['readability'] = str(readability)
+    resp.headers['errors_found'] = str(errors_found)
+    return(resp)
+    #return jsonify({'original_text': text, 'readability': readability, 'errors_found': errors_found, 'corrected_text': corrected_text})
 
 def evaluate_readability(text):
     import textstat
