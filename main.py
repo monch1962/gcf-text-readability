@@ -13,7 +13,7 @@ def evaluate_text():
     #print('request: %s' % request.data)
     #try:
         #text = request.get_json()['text']
-    text = request.data
+    text = str(request.get_data())
     print('text: %s' % text)
     #except KeyError:
     #    abort(400)
@@ -21,7 +21,7 @@ def evaluate_text():
     print(readability)
     (errors_found, corrected_text) = check_for_errors(str(text), 'en-AU')
     if corrected_text != text:
-        resp = make_response(json.dumps(corrected_text))
+        resp = make_response(corrected_text)
     else:
         resp = make_response('')
     resp.headers['readability'] = str(readability)
