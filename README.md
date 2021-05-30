@@ -1,27 +1,35 @@
 # gcf-text-readability
 Google Cloud Function to check text readability
 
+## To test locally
+
+`$ pip install functions-framework`
+`$ functions-framework --target=evaluate_text`
+
+Then send requests to localhost:8080
+
 ## To deploy
 
 `$ ./gcf-deploy.sh`
 
 ## To use
 
-Send it a http POST with a text payload such as 
+Send it a http POST with a JSON payload such as 
 ```
-This is the text I would like you to check for me
-
+{
+    "text": "This is the text I would like you to check for me"
+}
 ```
 
 and you should get a response back that looks something like
 ```
 {
     "corrected_text": "This is the text I would like you to check for me",
-    "errors_found": [],
-    "original_text": "This is the text I would like you to check for me",
-    "readability": 1.0
 }
 ```
+
+and readability and errors_found should be in the response headers.
+
 The `readability` number in the response corresponds to years of education, so a '9.0' would indicate year 9 of education.
 
 ### Spelling mistake correction
