@@ -11,17 +11,17 @@ def handle_bad_request(e):
 @app.route('/evaluate_text', methods=['POST'])
 def evaluate_text():
     #print('request: %s' % request.data)
-    #try:
-        #text = request.get_json()['text']
-    text = str(request.get_data())
-    print('text: %s' % text)
-    #except KeyError:
-    #    abort(400)
+    try:
+        text = request.get_json()['text']
+        #text = str(request.get_data())
+        print('text: %s' % text)
+    except KeyError:
+        abort(400)
     readability = evaluate_readability(text)
     print(readability)
     (errors_found, corrected_text) = check_for_errors(str(text), 'en-AU')
     if corrected_text != text:
-        resp = make_response(corrected_text)
+        resp = make_response(str(corrected_text))
     else:
         resp = make_response('')
     resp.headers['readability'] = str(readability)
