@@ -18,7 +18,7 @@ def evaluate_text(request):
     except KeyError:
         abort(400)
     readability = evaluate_readability(text)
-    print(readability)
+    print('readability: %d' % readability)
     (errors_found, corrected_text) = check_for_errors(str(text), 'en-AU')
     if corrected_text != text:
         resp = make_response(jsonify({'corrected_text': corrected_text}))
