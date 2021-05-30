@@ -9,7 +9,7 @@ def handle_bad_request(e):
     return jsonify({"error": "Bad request! You need to POST JSON with a single 'text' field containing the text to check to the /evaluate_text endpoint"}), 400
 
 @app.route('/evaluate_text', methods=['POST'])
-def evaluate_text():
+def evaluate_text(request):
     #print('request: %s' % request.data)
     try:
         text = request.get_json()['text']
@@ -21,7 +21,7 @@ def evaluate_text():
     print(readability)
     (errors_found, corrected_text) = check_for_errors(str(text), 'en-AU')
     if corrected_text != text:
-        resp = make_response(str(corrected_text))
+        resp = make_response(jsonify({'corrected_text': corrected_text}))
     else:
         resp = make_response('')
     resp.headers['readability'] = str(readability)
