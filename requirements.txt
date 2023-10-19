@@ -23,6 +23,6 @@ requests==2.25.1
 textstat==0.7.1
 toml==0.10.2
 tqdm==4.61.0
-urllib3==1.26.4
+urllib3==1.26.18
 watchdog==1.0.2
 Werkzeug==2.0.1
